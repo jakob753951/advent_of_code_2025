@@ -1,5 +1,4 @@
 import day_02/parsing
-import day_02/models
 import day_02/part_1/main
 import gleam/list
 
