@@ -22,8 +22,9 @@ pub fn is_invalid(id: Int) -> Bool {
   let string_id = id |> int.to_string()
   let string_length = string_id |> string.length
   let substr_lengths = list.range(1, string_length / 2)
-  
-  substr_lengths |> list.any(fn(substr_length) {
+
+  substr_lengths
+  |> list.any(fn(substr_length) {
     case string_length < 2, string_length % substr_length {
       False, 0 ->
         {
