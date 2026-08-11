@@ -1,24 +1,20 @@
-import day_11/part_1
 import day_11/models
+import day_11/part_1
 import gleam/dict
 import gleam/int
 import gleam/list
 import gleam/set.{type Set}
 
 pub fn solve(problem: models.Problem) -> Int {
+  let svr_fft = part_1.find(problem, from: "svr", to: "fft")
+  let fft_dac = part_1.find(problem, from: "fft", to: "dac")
+  let dac_out = part_1.find(problem, from: "dac", to: "out")
 
-  let svr_fft = part_1.find(problem, from: "svr", to: "fft") |> echo
-  let fft_dac = part_1.find(problem, from: "fft", to: "dac") |> echo
-  let dac_out = part_1.find(problem, from: "dac", to: "out") |> echo
+  let svr_dac = part_1.find(problem, from: "svr", to: "dac")
+  let dac_fft = part_1.find(problem, from: "dac", to: "fft")
+  let fft_out = part_1.find(problem, from: "fft", to: "out")
 
-  let svr_dac = part_1.find(problem, from: "svr", to: "dac") |> echo
-  let dac_fft = part_1.find(problem, from: "dac", to: "fft") |> echo
-  let fft_out = part_1.find(problem, from: "fft", to: "out") |> echo
-
-  svr_fft * fft_dac * dac_out
-  +
-  svr_dac * dac_fft * fft_out
-
+  svr_fft * fft_dac * dac_out + svr_dac * dac_fft * fft_out
   // find(
   //   problem,
   //   from: "svr",

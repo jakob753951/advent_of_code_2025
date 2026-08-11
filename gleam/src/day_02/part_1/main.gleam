@@ -3,6 +3,7 @@ import day_02/parsing
 import gleam/int
 import gleam/list
 import gleam/string
+import int_utils
 
 pub fn solve(input: String) -> Int {
   let ranges = parsing.parse_ranges(input)
@@ -12,7 +13,7 @@ pub fn solve(input: String) -> Int {
 }
 
 pub fn invalid_ids_from_range(range: models.Range) -> Int {
-  list.range(range.start, range.stop)
+  int_utils.range(range.start, range.stop)
   |> list.filter(is_invalid)
   |> int.sum()
 }
