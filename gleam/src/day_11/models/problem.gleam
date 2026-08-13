@@ -23,5 +23,5 @@ pub fn parse(input: String) -> Result(Problem, Nil) {
     |> result.all,
   )
 
-  Ok(nodes |> dict.from_list)
+  nodes |> dict.from_list |> Ok
 }

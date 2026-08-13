@@ -23,15 +23,20 @@ pub fn set_index(
   grid: Grid(cell),
   index: #(Int, Int),
   new_value: cell,
-) -> Grid(cell) {
-  grid
-  |> list_utils.set_index(
-    index.1,
+) -> Result(Grid(cell), String) {
+  use row <- result.try(
     grid
-      |> list_utils.get_index(index.1)
-      |> option.unwrap([])
-      |> list_utils.set_index(index.0, new_value),
+    |> list_utils.get_index(index.1)
+    |> option.to_result(""),
   )
+
+  use updated_row <- result.try(
+    row
+    |> list_utils.set_index(index.0, new_value),
+  )
+
+  grid
+  |> list_utils.set_index(index.1, updated_row)
 }
 
 pub fn get_neighbors(grid: Grid(cell), at indexes: #(Int, Int)) -> List(cell) {

@@ -13,5 +13,5 @@ pub fn solve_test() {
 .@@@@@@@@.
 @.@.@@@.@."
 
-  assert part_1.solve(input) == 13
+  assert part_1.solve(input) == Ok(13)
 }

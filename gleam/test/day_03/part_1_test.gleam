@@ -1,6 +1,7 @@
 import day_03/models/bank
 import day_03/part_1
 import gleam/list
+import gleam/result
 
 pub fn get_joltage_test() {
   let cases = [
@@ -11,7 +12,7 @@ pub fn get_joltage_test() {
   ]
   cases
   |> list.each(fn(c) {
-    assert c.0 |> bank.parse |> part_1.get_joltage() == c.1
+    assert c.0 |> bank.parse |> result.map(part_1.get_joltage) == Ok(c.1)
   })
 }
 

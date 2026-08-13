@@ -3,24 +3,22 @@ import day_04/models/grid.{type Grid}
 import gleam/list
 import gleam/result
 
-pub fn solve(input: String) -> Int {
-  let grid =
-    input
-    |> grid.parse(cell.parse)
-    |> result.unwrap([])
+pub fn solve(input: String) -> Result(Int, String) {
+  use grid <- result.try(input |> grid.parse(cell.parse))
 
-  remove_loop(grid, 0)
+  use removed_papers <- result.try(remove_papers_loop(grid, 0))
+  Ok(removed_papers)
 }
 
-fn remove_loop(grid: Grid(Cell), acc: Int) -> Int {
-  let #(grid, removed) = grid |> remove_papers()
+fn remove_papers_loop(grid: Grid(Cell), acc: Int) -> Result(Int, String) {
+  use #(grid, removed) <- result.try(grid |> remove_papers())
   case removed {
-    0 -> acc
-    r -> remove_loop(grid, acc + r)
+    0 -> Ok(acc)
+    r -> remove_papers_loop(grid, acc + r)
   }
 }
 
-fn remove_papers(grid: Grid(Cell)) -> #(Grid(Cell), Int) {
+fn remove_papers(grid: Grid(Cell)) -> Result(#(Grid(Cell), Int), String) {
   let accessible_papers =
     grid
     |> grid.index_map(fn(pos, cell) {
@@ -30,18 +28,21 @@ fn remove_papers(grid: Grid(Cell)) -> #(Grid(Cell), Int) {
     |> list.flatten
     |> list.filter(fn(c) { c.2 < 4 })
     |> list.filter(fn(c) { c.1 == cell.Paper })
-  let grid =
+  use grid <- result.try(
     grid
-    |> set_indices(accessible_papers |> list.map(fn(c) { c.0 }), cell.Empty)
-  #(grid, accessible_papers |> list.length())
+    |> set_indices(accessible_papers |> list.map(fn(c) { c.0 }), cell.Empty),
+  )
+  Ok(#(grid, accessible_papers |> list.length()))
 }
 
 fn set_indices(
   grid: Grid(cell),
   indices: List(#(Int, Int)),
   new_value: cell,
-) -> Grid(cell) {
-  list.fold(over: indices, from: grid, with: fn(grid, index) {
-    grid |> grid.set_index(index, new_value)
+) -> Result(Grid(cell), String) {
+  list.fold(over: indices, from: Ok(grid), with: fn(grid, index) {
+    grid
+    |> result.map(fn(grid) { grid |> grid.set_index(index, new_value) })
+    |> result.flatten
   })
 }

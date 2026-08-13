@@ -8,13 +8,14 @@ import gleam/result
 import int_utils
 import list_utils
 
-pub fn solve(input: String) -> Joltage {
-  let banks = input.parse(input)
-  banks
-  |> list.map(get_joltage(_, 12))
-  |> result.all()
-  |> result.unwrap([-1])
-  |> int.sum
+pub fn solve(input: String) -> Result(Joltage, Nil) {
+  use banks <- result.try(input.parse(input))
+  use joltages <- result.try(
+    banks
+    |> list.map(get_joltage(_, 12))
+    |> result.all(),
+  )
+  Ok(int.sum(joltages))
 }
 
 pub fn get_joltage(bank: Bank, max_digits: Int) -> Result(Joltage, Nil) {

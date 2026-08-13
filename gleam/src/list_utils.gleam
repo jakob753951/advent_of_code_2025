@@ -1,8 +1,26 @@
 import gleam/bool
+import gleam/int
 import gleam/list
 import gleam/option.{type Option, None}
 
-pub fn set_index(l: List(a), index: Int, new_value: a) -> List(a) {
+pub fn set_index(
+  l: List(a),
+  index: Int,
+  new_value: a,
+) -> Result(List(a), String) {
+  let list_length = list.length(l)
+  use <- bool.guard(index < 0, Error("index must be greater than 0"))
+  use <- bool.guard(
+    index >= list_length,
+    Error(
+      "index '"
+      <> int.to_string(index)
+      <> "' must be strictly less than the length of the list '"
+      <> int.to_string(list_length)
+      <> "'.",
+    ),
+  )
+
   l
   |> list.take(index)
   |> list.reverse
@@ -10,6 +28,7 @@ pub fn set_index(l: List(a), index: Int, new_value: a) -> List(a) {
     from: [new_value, ..l |> list.drop(index + 1)],
     with: list.prepend,
   )
+  |> Ok
 }
 
 pub fn get_index(l: List(a), index: Int) -> Option(a) {

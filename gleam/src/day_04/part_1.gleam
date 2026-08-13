@@ -4,11 +4,8 @@ import gleam/list
 import gleam/pair
 import gleam/result
 
-pub fn solve(input: String) -> Int {
-  let grid =
-    input
-    |> grid.parse(cell.parse)
-    |> result.unwrap([])
+pub fn solve(input: String) -> Result(Int, String) {
+  use grid <- result.try(input |> grid.parse(cell.parse))
 
   let accessible_papers =
     grid
@@ -20,5 +17,5 @@ pub fn solve(input: String) -> Int {
     |> list.filter(fn(pair) { pair |> pair.second() < 4 })
     |> list.filter(fn(pair) { pair |> pair.first() == cell.Paper })
 
-  accessible_papers |> list.length()
+  accessible_papers |> list.length() |> Ok
 }

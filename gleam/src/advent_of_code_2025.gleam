@@ -5,6 +5,6 @@ import simplifile
 
 pub fn main() -> Nil {
   let assert Ok(file_string) = simplifile.read("data/day_04.txt")
-  let result = part_2.solve(file_string)
+  let assert Ok(result) = part_2.solve(file_string)
   io.println(result |> int.to_string)
 }

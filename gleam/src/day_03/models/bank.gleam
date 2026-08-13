@@ -6,9 +6,8 @@ import int_utils
 pub type Bank =
   List(Battery)
 
-pub fn parse(input: String) -> Bank {
+pub fn parse(input: String) -> Result(Bank, Nil) {
   input
   |> int.parse()
   |> result.try(int_utils.digits(_, 10))
-  |> result.unwrap([])
 }

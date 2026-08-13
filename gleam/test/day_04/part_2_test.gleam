@@ -13,5 +13,5 @@ pub fn solve_test() {
 .@@@@@@@@.
 @.@.@@@.@."
 
-  assert part_2.solve(input) == 43
+  assert part_2.solve(input) == Ok(43)
 }

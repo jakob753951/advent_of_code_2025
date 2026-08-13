@@ -6,7 +6,7 @@ import gleam/list
 import list_utils
 
 pub fn solve(input: String) -> Joltage {
-  let banks = input.parse(input)
+  let assert Ok(banks) = input.parse(input)
   banks
   |> list.map(get_joltage)
   |> int.sum
