@@ -1,18 +1,18 @@
-import day_02/models
-import day_02/parsing
+import day_02/models/input
+import day_02/models/range.{type Range}
 import gleam/int
 import gleam/list
 import gleam/string
 import int_utils
 
 pub fn solve(input: String) -> Int {
-  let ranges = parsing.parse_ranges(input)
+  let assert Ok(ranges) = input.parse(input)
   ranges
   |> list.map(invalid_ids_from_range)
   |> int.sum
 }
 
-pub fn invalid_ids_from_range(range: models.Range) -> Int {
+pub fn invalid_ids_from_range(range: Range) -> Int {
   int_utils.range(range.start, range.stop)
   |> list.filter(is_invalid)
   |> int.sum()

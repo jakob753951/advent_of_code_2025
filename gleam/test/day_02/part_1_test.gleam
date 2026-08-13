@@ -1,6 +1,7 @@
-import day_02/parsing
-import day_02/part_1/main
+import day_02/models/range
+import day_02/part_1
 import gleam/list
+import gleam/result
 
 pub fn example_ranges_test() {
   let cases = [
@@ -17,15 +18,16 @@ pub fn example_ranges_test() {
     #("2121212118-2121212124", 0),
   ]
 
-  assert cases
-    |> list.all(fn(p) {
-      p.0 |> parsing.parse_range |> main.invalid_ids_from_range == p.1
-    })
+  cases
+  |> list.each(fn(p) {
+    assert p.0 |> range.parse |> result.map(part_1.invalid_ids_from_range)
+      == Ok(p.1)
+  })
 }
 
 pub fn solve_test() {
   let input =
     "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
 
-  assert main.solve(input) == 1_227_775_554
+  assert part_1.solve(input) == 1_227_775_554
 }

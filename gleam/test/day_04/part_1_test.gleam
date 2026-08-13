@@ -1,4 +1,4 @@
-import day_04/part_1/main
+import day_04/part_1
 
 pub fn solve_test() {
   let input =
@@ -13,5 +13,5 @@ pub fn solve_test() {
 .@@@@@@@@.
 @.@.@@@.@."
 
-  assert main.solve(input) == 13
+  assert part_1.solve(input) == 13
 }

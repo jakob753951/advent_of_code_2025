@@ -15,12 +15,6 @@ pub fn solve(problem: models.Problem) -> Int {
   let fft_out = part_1.find(problem, from: "fft", to: "out")
 
   svr_fft * fft_dac * dac_out + svr_dac * dac_fft * fft_out
-  // find(
-  //   problem,
-  //   from: "svr",
-  //   target: "out",
-  //   through: set.from_list(["dac", "fft"]),
-  // )
 }
 
 pub fn find(

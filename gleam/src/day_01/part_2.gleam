@@ -1,17 +1,19 @@
-import day_01/models
-import day_01/parsing
+import day_01/models/dial.{type Dial}
+import day_01/models/direction.{Left, Right}
+import day_01/models/input
+import day_01/models/instruction.{type Instruction}
 import gleam/int
 import gleam/list
 import gleam/pair
 import gleam/result
 
 pub fn apply_instruction(
-  dial: #(models.Dial, Int),
-  instruction: models.Instruction,
-) -> #(models.Dial, Int) {
+  dial: #(Dial, Int),
+  instruction: Instruction,
+) -> #(Dial, Int) {
   let rotated = case instruction.direction {
-    models.Left -> dial.0 - instruction.distance
-    models.Right -> dial.0 + instruction.distance
+    Left -> dial.0 - instruction.distance
+    Right -> dial.0 + instruction.distance
   }
 
   let assert Ok(new_value) = rotated |> int.modulo(by: 100)
@@ -26,10 +28,7 @@ pub fn apply_instruction(
   #(new_value, times_crossed_zero + crossed_zero)
 }
 
-fn get_zeroes(
-  start_position: models.Dial,
-  instructions: List(models.Instruction),
-) -> Int {
+fn get_zeroes(start_position: Dial, instructions: List(Instruction)) -> Int {
   let states =
     instructions
     |> list.scan(#(start_position, 0), apply_instruction)
@@ -43,7 +42,7 @@ fn get_zeroes(
 }
 
 pub fn solve(input: String) -> Int {
-  let instructions = parsing.parse_instructions(input)
+  let assert Ok(instructions) = input.parse(input)
   let zeroes = get_zeroes(50, instructions)
   zeroes
 }

@@ -1,5 +1,6 @@
-import day_03/models
-import day_03/parsing
+import day_03/models/bank.{type Bank}
+import day_03/models/input
+import day_03/models/joltage.{type Joltage}
 import gleam/bool
 import gleam/int
 import gleam/list
@@ -7,8 +8,8 @@ import gleam/result
 import int_utils
 import list_utils
 
-pub fn solve(input: String) -> models.Joltage {
-  let banks = parsing.parse_banks(input)
+pub fn solve(input: String) -> Joltage {
+  let banks = input.parse(input)
   banks
   |> list.map(get_joltage(_, 12))
   |> result.all()
@@ -16,16 +17,13 @@ pub fn solve(input: String) -> models.Joltage {
   |> int.sum
 }
 
-pub fn get_joltage(
-  bank: models.Bank,
-  max_digits: Int,
-) -> Result(models.Joltage, Nil) {
+pub fn get_joltage(bank: Bank, max_digits: Int) -> Result(Joltage, Nil) {
   get_joltage_numbers(bank, max_digits)
   |> result.try(int_utils.undigits(_, 10))
 }
 
 pub fn get_joltage_numbers(
-  bank: models.Bank,
+  bank: Bank,
   max_digits: Int,
 ) -> Result(List(Int), Nil) {
   use <- bool.guard(list.length(bank) < max_digits, Error(Nil))
