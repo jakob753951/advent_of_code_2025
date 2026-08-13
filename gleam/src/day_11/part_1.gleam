@@ -1,17 +1,13 @@
-import day_11/models
+import day_11/models/problem.{type Problem}
 import gleam/dict
 import gleam/int
 import gleam/list
 
-pub fn solve(problem: models.Problem) -> Int {
+pub fn solve(problem: Problem) -> Int {
   find(problem, "you", "out")
 }
 
-pub fn find(
-  in problem: models.Problem,
-  from node: String,
-  to target: String,
-) -> Int {
+pub fn find(in problem: Problem, from node: String, to target: String) -> Int {
   case node == target {
     True -> 1
     False -> {

@@ -1,4 +1,4 @@
-import day_11/parsing
+import day_11/models/problem
 import day_11/part_2
 import gleam/result
 
@@ -19,7 +19,7 @@ ggg: out
 hhh: out"
   let assert Ok(actual) =
     example
-    |> parsing.parse_problem
+    |> problem.parse
     |> result.map(part_2.solve)
   assert actual == 2
 }

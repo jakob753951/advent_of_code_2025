@@ -1,4 +1,4 @@
-import day_11/parsing
+import day_11/models/problem
 import day_11/part_1
 import gleam/dict
 import gleam/result
@@ -31,7 +31,7 @@ iii: out"
     ]
     |> dict.from_list
 
-  let assert Ok(actual) = example |> parsing.parse_problem()
+  let assert Ok(actual) = example |> problem.parse()
 
   assert actual == expected
 }
@@ -50,7 +50,7 @@ hhh: ccc fff iii
 iii: out"
   let assert Ok(actual) =
     example
-    |> parsing.parse_problem
+    |> problem.parse
     |> result.map(part_1.solve)
   assert actual == 5
 }

@@ -1,11 +1,11 @@
-import day_11/models
+import day_11/models/problem.{type Problem}
 import day_11/part_1
 import gleam/dict
 import gleam/int
 import gleam/list
 import gleam/set.{type Set}
 
-pub fn solve(problem: models.Problem) -> Int {
+pub fn solve(problem: Problem) -> Int {
   let svr_fft = part_1.find(problem, from: "svr", to: "fft")
   let fft_dac = part_1.find(problem, from: "fft", to: "dac")
   let dac_out = part_1.find(problem, from: "dac", to: "out")
@@ -18,7 +18,7 @@ pub fn solve(problem: models.Problem) -> Int {
 }
 
 pub fn find(
-  in problem: models.Problem,
+  in problem: Problem,
   from node: String,
   target target: String,
   through checkpoints: Set(String),
